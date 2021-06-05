@@ -1,4 +1,5 @@
 import hashlib
+from datetime import datetime
 
 
 class Block:
@@ -20,8 +21,6 @@ class Block:
 
 M4BlockChain = []
 
-from datetime import datetime
-
 
 def create_genesis_block():
     return Block(0, datetime.now(), "Genesis Block", "0")
@@ -32,9 +31,14 @@ M4BlockChain.append(create_genesis_block())
 
 # write a function `next_block` to generate a block
 def next_block(last_block):
-    pass
+    temp_index = last_block.index + 1
+    temp_content = "this is block {i}".format(i=temp_index)
+    prev_hash = Block.calc_hash(last_block)
+    return Block(temp_index, datetime.now(), temp_content, prev_hash)
 
 
 # append 5 blocks to the blockchain
 def app_five(block_list):
-    pass
+    for j in range(5):
+        new_block = next_block(block_list[-1])
+        block_list.append(new_block)
